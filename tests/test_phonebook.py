@@ -13,32 +13,33 @@ def tests_phonebook_numbers_type():
     assert type(new_phonebook.numbers) == dict
 
 def test_phonebook_add():
-    new_phonebook = phonebook.PhoneBook()
+    new_phonebook: object = phonebook.PhoneBook()
     new_phonebook.add(name="John Doe", number="1234567890")
     assert isinstance(new_phonebook, phonebook.PhoneBook)
 
-def test_phonebook_lookup():
-    new_phonebook = phonebook.PhoneBook()
-    new_phonebook.add(name="John Doe", number="1234567890")
-    number = new_phonebook.lookup(name="John Doe")
-    assert number == "1234567890"
-
-def test_create_phonebook_exists():
-    assert phonebook.create_phonebook
-
-def test_create_phonebook_result_type():
-    assert type(phonebook.create_phonebook([("name1", "number1")])) == dict
-
-def test_create_phonebook():
+def test_add_multiple():
     people: list = [
         ("f1 l1", "198724"),
         ("f2 l2", "298734")
     ]
 
-    assert phonebook.create_phonebook(people) == {
+    new_phonebook: object = phonebook.PhoneBook()
+    assert new_phonebook.add_multiple(people) == {
                                                     "f1 l1": "198724",
                                                     "f2 l2": "298734"
                                                 }
+
+def test_phonebook_lookup():
+    new_phonebook: object = phonebook.PhoneBook()
+    new_phonebook.add(name="John Doe", number="1234567890")
+    number = new_phonebook.lookup(name="John Doe")
+    assert number == "1234567890"
+
+def test_missing_name():
+    new_phonebook: object = phonebook.PhoneBook()
+    new_phonebook.add(name="John Doe", number="1234567890")
+    with pytest.raises(Exception):
+        assert new_phonebook.lookup(name="Jane")
 
 def test_phonebook_consistency():
     is_consistent: bool = True
@@ -49,10 +50,11 @@ def test_phonebook_consistency():
         ("f4 l4", "298"),
     ]
 
-    phone_book: dict = phonebook.create_phonebook(people)
+    new_phonebook: object = phonebook.PhoneBook()
+    new_phonebook.add_multiple(people)
 
-    for i, number in enumerate(phone_book.values()):
-        for j, prefix in enumerate(phone_book.values()):
+    for i, number in enumerate(new_phonebook.numbers.values()):
+        for j, prefix in enumerate(new_phonebook.numbers.values()):
             if i != j and prefix in number:
                 is_consistent = False
                 break
