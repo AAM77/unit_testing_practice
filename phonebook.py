@@ -1,7 +1,21 @@
 
+import inspect
 from typing import List
 
 
+class PhoneBook():
+
+    def __init__(self):
+        self.numbers: dict = {}
+
+    def add(self, name: str, number: str):
+        self.numbers[name] = number
+
+    def lookup(self, name: str) -> str:
+        try:
+            return self.numbers[name]
+        except Exception(KeyError):
+            raise KeyError("Key does not exist.")
 
 
 person_list: List[tuple] = [
@@ -18,6 +32,5 @@ def create_phonebook(people: list) -> dict:
             continue
         phonebook[person] = number
 
-    breakpoint()
     return phonebook
 
