@@ -1,5 +1,27 @@
+import inspect
 import pytest
 import phonebook
+
+def test_phonebook_exists():
+    assert phonebook.PhoneBook
+
+def test_phonebook_type():
+    assert inspect.isclass(phonebook.PhoneBook)
+
+def tests_phonebook_numbers_type():
+    new_phonebook = phonebook.PhoneBook()
+    assert type(new_phonebook.numbers) == dict
+
+def test_phonebook_add():
+    new_phonebook = phonebook.PhoneBook()
+    new_phonebook.add(name="John Doe", number="1234567890")
+    assert isinstance(new_phonebook, phonebook.PhoneBook)
+
+def test_phonebook_lookup():
+    new_phonebook = phonebook.PhoneBook()
+    new_phonebook.add(name="John Doe", number="1234567890")
+    number = new_phonebook.lookup(name="John Doe")
+    assert number == "1234567890"
 
 def test_create_phonebook_exists():
     assert phonebook.create_phonebook
